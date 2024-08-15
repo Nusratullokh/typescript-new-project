@@ -1,14 +1,29 @@
-type User ={
-    name: string
-    age: number
-    email: string
-    addres: string | number
+let input = document.getElementById('inputBox') as HTMLInputElement;
+let buttons = document.querySelectorAll('button');
+let inputString: string = "";
+let buttonArray = Array.from(buttons);
 
-}
-let user: User ={
-    name: "John",
-    age: 30,
-    email: "Xgk7w@example.com",
-    addres: "123 Main St"
+buttonArray.forEach(button => {
+    button.addEventListener('click', (e: MouseEvent) => {
+        let target = e.target as HTMLElement;
 
-}
+        if (target.innerHTML === '=') {
+            try {
+                inputString = eval(inputString);
+                input.value = inputString;
+            } catch (error) {
+                input.value = "Error";
+                inputString = "";
+            }
+        } else if (target.innerHTML === 'AC') {
+            inputString = "";
+            input.value = inputString;
+        } else if (target.innerHTML === 'DEL') {
+            inputString = inputString.substring(0, inputString.length - 1);
+            input.value = inputString;
+        } else {
+            inputString += target.innerHTML;
+            input.value = inputString;
+        }
+    });
+});
